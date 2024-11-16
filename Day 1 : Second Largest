@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int getSecondLargest(vector<int> &arr) {
+        if (arr.size() < 2) {
+            return -1;
+        }
+        
+        int largest = INT_MIN;
+        int second_largest = INT_MIN;
+        for (int num : arr) {
+            if (num > largest) {
+                second_largest = largest;
+                largest = num;
+            }
+            else if (num < largest && num > second_largest) {
+                second_largest = num;
+            }
+        }
+        
+        if (second_largest == INT_MIN) {
+            return -1;
+        }
+        
+        return second_largest;
+    }
+};
