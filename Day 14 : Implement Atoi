@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int myAtoi(char *s) {
+        if (s == nullptr) return 0;
+        while (*s == ' ') {
+            s++;
+        }
+        int sign = 1;
+        if (*s == '+' || *s == '-') {
+            sign = (*s == '-') ? -1 : 1;
+            s++;
+        }
+        long long res = 0;
+        while (*s >= '0' && *s <= '9') {
+            int dig = *s - '0';
+            if (res > INT_MAX / 10 || (res == INT_MAX / 10 && dig > INT_MAX % 10)) {
+                return (sign == 1) ? INT_MAX : INT_MIN;
+            }
+            res = res * 10 + dig;
+            s++;
+        }
+        res *= sign;
+        if (res > INT_MAX) return INT_MAX;
+        if (res < INT_MIN) return INT_MIN;
+        
+        return (int)res;
+    }
+};
