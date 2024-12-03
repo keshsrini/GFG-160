@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> computeLPS(string pattern) {
+        int n = pattern.length();
+        vector<int> l(n, 0);
+        int len = 0;
+        int i = 1;
+        while (i < n) {
+            if (pattern[i] == pattern[len]) {
+                len++;
+                l[i] = len;
+                i++;
+            }
+            else {
+                if (len != 0) {
+                    len = l[len - 1];
+                }
+                else {
+                    l[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return l;
+    }
+    
+    int minChar(string& str) {
+        string rev = str;
+        reverse(rev.begin(), rev.end());
+        string con = str + "$" + rev;
+        vector<int> l = computeLPS(con);
+        return str.length() - l.back();
+    }
+};
