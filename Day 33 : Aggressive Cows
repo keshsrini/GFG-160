@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool canPlaceCows(vector<int>& stalls, int k, int minDist) {
+        int count = 1; 
+        int l = stalls[0];
+        for(int i = 1; i < stalls.size(); i++) {
+            if(stalls[i] - l >= minDist) {
+                count++;
+                l = stalls[i];
+                if(count >= k) return true;
+            }
+        }
+        return false;
+    }
+    
+    int aggressiveCows(vector<int> &stalls, int k) {
+        sort(stalls.begin(), stalls.end());
+        int left = 1;  
+        int right = stalls.back() - stalls[0];  
+        int res = 0;
+        
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if(canPlaceCows(stalls, k, mid)) {
+                res = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }return res;
+    }
+};
